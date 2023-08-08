@@ -11,6 +11,11 @@ from wagtail.admin.panels.group import TabbedInterface, ObjectList
 class Catalog(Page):
     pass
     
+BUILDING_TYPE_CHOICES = [
+        ('Сруб', 'Сруб'),
+        ('Кирпичные дома', 'Кирпичные дома'),
+        ('Каркасные дома', 'Каркасные дома'),
+    ]
 
 class House(Page):
     name = models.CharField('Название дома', max_length=100)
@@ -18,7 +23,7 @@ class House(Page):
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2, blank=True, null=True)
     project = models.CharField('Проект', blank=True, null=True, max_length=100)    
     floor = models.IntegerField('Количество этажей', blank=True, null=True)
-    building_type = models.CharField('Тип постройки', max_length=100, blank=True, null=True)
+    building_type = models.CharField('Тип постройки', choices=BUILDING_TYPE_CHOICES, max_length=100, blank=True, null=True)
     floors = models.IntegerField('Этажи', blank=True, null=True)
     rooms = models.IntegerField('Количество комнат', blank=True, null=True)
     bathrooms = models.IntegerField('Санузлы', blank=True, null=True)

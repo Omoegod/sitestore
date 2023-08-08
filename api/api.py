@@ -1,11 +1,12 @@
 import re
 from catalog.models import House, FloorPlan, HouseImage, Content
+from api.filters import HouseFilter
 
 from django.conf import settings
 from django.urls import reverse
 from rest_framework import serializers
 from rest_framework import viewsets, generics
-
+from django_filters.rest_framework import DjangoFilterBackend
 
 class FloorPlanSerializer(serializers.ModelSerializer):
     schema = serializers.SerializerMethodField()
@@ -87,7 +88,7 @@ class CatalogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = House
-        fields = ['id', 'name', 'area', 'price', 'project', 'floor', 'card_url']
+        fields = ['id', 'name', 'area', 'price', 'project', 'floor', 'card_url', 'building_type']
 
     def get_card_url(self, obj):
         request = self.context.get('request')
@@ -97,3 +98,5 @@ class CatalogSerializer(serializers.ModelSerializer):
 class CatalogObject(viewsets.ModelViewSet):
     serializer_class = CatalogSerializer
     queryset = House.objects.all()
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = HouseFilter

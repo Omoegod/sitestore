@@ -5,7 +5,7 @@ from .api import CatalogObject, CardObject
 
 router = routers.DefaultRouter()
 
-router.register(r'catalog', CatalogObject)
+router.register(r'catalog', CatalogObject, basename="catalog")
 router.register(r'card', CardObject)
 
 
