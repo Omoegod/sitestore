@@ -23,6 +23,9 @@ class House(Page):
     price = models.DecimalField('Цена', max_digits=10, decimal_places=2, blank=True, null=True)
     project = models.CharField('Проект', blank=True, null=True, max_length=100)    
     floor = models.IntegerField('Количество этажей', blank=True, null=True)
+    logo = models.ForeignKey(
+        'wagtailimages.Image', on_delete=models.CASCADE, related_name='logo_img', blank=True, null=True
+    )
     building_type = models.CharField('Тип постройки', choices=BUILDING_TYPE_CHOICES, max_length=100, blank=True, null=True)
     floors = models.IntegerField('Этажи', blank=True, null=True)
     rooms = models.IntegerField('Количество комнат', blank=True, null=True)
@@ -34,6 +37,7 @@ class House(Page):
         MultiFieldPanel(
             [        
         FieldPanel('name', classname='full'),
+        FieldPanel('logo', classname='full'),
         FieldRowPanel(
             [
                 FieldPanel('area'),

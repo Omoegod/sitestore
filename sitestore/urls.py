@@ -14,7 +14,6 @@ urlpatterns = [
     path("django-admin/", admin.site.urls),
     path("admin/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
-    path('tinymce/', include('tinymce.urls')),
     path("multi-add-fix/", add_multiple_fix, name="add_multiple_fix"),
     path("search/", search_views.search, name="search"),
     path('api-auth/', include('rest_framework.urls')),

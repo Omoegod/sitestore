@@ -85,15 +85,24 @@ class CardObject(viewsets.ModelViewSet):
 
 class CatalogSerializer(serializers.ModelSerializer):
     card_url = serializers.SerializerMethodField()
+    logo = serializers.SerializerMethodField()
 
     class Meta:
         model = House
-        fields = ['id', 'name', 'area', 'price', 'project', 'floor', 'card_url', 'building_type']
+        fields = ['id', 'name', 'logo', 'area', 'price', 'project', 'floor', 'card_url', 'building_type']
 
     def get_card_url(self, obj):
         request = self.context.get('request')
         card_url = reverse('card-detail', kwargs={'pk': obj.id})
         return request.build_absolute_uri(card_url)
+    
+    def get_logo(self, obj):
+        request = self.context.get('request')
+        if obj.logo:
+            logo_url = request.build_absolute_uri(obj.logo.file.url)
+            return logo_url
+        else:
+            return None
 
 class CatalogObject(viewsets.ModelViewSet):
     serializer_class = CatalogSerializer
